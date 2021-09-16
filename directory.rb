@@ -32,7 +32,20 @@ def print_menu
   puts "Please enter a number from the options below (enter as an integer)"
   puts "1 - Input the students"
   puts "2 - Show the students"
+  puts "3 - Save this list to students.csv"
   puts "9 - Exit"
+end
+
+def save_students
+  #open file for writing
+  file = File.open("students.csv", "w")
+  # iterate over student array and add to file
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
 end
 
 def show_students
@@ -49,6 +62,8 @@ def process(selection)
       show_students
     when "9"
       exit
+    when "3"
+      save_students
     else
       puts "I don't know what you meant, try again"
   end
