@@ -33,6 +33,7 @@ def print_menu
   puts "1 - Input the students"
   puts "2 - Show the students"
   puts "3 - Save this list to students.csv"
+  puts "4 - Load the students from students.csv"
   puts "9 - Exit"
 end
 
@@ -54,6 +55,15 @@ def show_students
   print_footer()
 end
 
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
 def process(selection)
   case selection
     when "1"
@@ -64,6 +74,8 @@ def process(selection)
       exit
     when "3"
       save_students
+    when "4"
+      load_students
     else
       puts "I don't know what you meant, try again"
   end
@@ -78,3 +90,4 @@ def interactive_menu
 end
 
 interactive_menu()
+
